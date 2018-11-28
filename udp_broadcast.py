@@ -12,7 +12,7 @@ while True:
     # Calls function from temp_sense.py
     data = json_string()
     # Sends the JSON object as bytes
-    socket.sendto(bytes(data, "UTF-8"), ("<broadcast>", BROADCAST_TO_PORT))
+    socket.sendto(bytes(data, "UTF-8"), ('<broadcast>', BROADCAST_TO_PORT))
     # Print the JSON object to console
     print(data)
     # Wait 30 seconds
