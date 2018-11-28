@@ -15,9 +15,8 @@ def json_string():
     # Get current time
     now = datetime.now()
     # Stuff everything into a JSON string
-    # Get Mac-address, convert to hexcode, then lastly to string
-    # Add * to the end of the string to signify end of mac_address
-    json_data = {"Id": (str(hex(uuid.getnode())))+"*",
+    # Get Mac-address(Id), convert to hexcode, then lastly to string
+    json_data = {"Id": (str(hex(uuid.getnode()))),
                  "Temperature": temperature,
                  # Format current time to the folllowing format
                  "Timestamp": now.strftime("%d-%m-%Y %H:%M:%S"),
