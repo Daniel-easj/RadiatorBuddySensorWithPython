@@ -1,26 +1,43 @@
 from sense_hat import SenseHat
 from datetime import *
+from socket import *
+import time as t
 import json
 import uuid
 
 # Create an object of the sensehat
 sense = SenseHat()
 
-# Function to create a json string
+# Port to broadcast to
+BROADCAST_TO_PORT = 11912
+
+# Function to create a JSON string
 
 
 def json_string():
-    # Get temperature, round to 2 decimal points
-    temperature = round(sense.get_temperature(), 2)
+    # Get temperature
+    temperature = sense.get_temperature()
     # Get current time
     now = datetime.now()
-    # Stuff everything into a JSON string
+    # Put everything into a JSON string
     # Get Mac-address(Id), convert to hexcode, then lastly to string
     json_data = {"Id": (str(hex(uuid.getnode()))),
                  "Temperature": temperature,
                  # Format current time to the folllowing format
-                 "Timestamp": now.strftime("%d-%m-%Y %H:%M:%S"),
-                 "inDoor": True,
-                 "Location": "Stue"}
+                 "Timestamp": now.strftime("%d-%m-%Y %H:%M:%S")}
     # Return JSON object
     return json.dumps(json_data)
+
+
+socket = socket(AF_INET, SOCK_DGRAM)
+socket.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
+# Infinite loop
+while True:
+    # Calls function to convert to JSON
+    data = json_string()
+    # Sends the JSON object as bytes
+    socket.sendto(bytes(data, "UTF-8"), ('<broadcast>', BROADCAST_TO_PORT))
+    # Print the JSON object to console
+    print(data)
+    # Wait 30 seconds
+    t.sleep(30)
