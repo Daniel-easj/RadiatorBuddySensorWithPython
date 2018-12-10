@@ -37,7 +37,7 @@ def json_string():
     json_data = {"Id": getMAC(ETHERNET_INTERFACE),
                  "Temperature": temperature,
                  # Format current time to the folllowing format
-                 "Timestamp": now.strftime("%d-%m-%Y %H:%M:%S")}
+                 "Timestamp": now.strftime("%Y-%m-%d %H:%M:%S")}
     # Return JSON object
     return json.dumps(json_data)
 
